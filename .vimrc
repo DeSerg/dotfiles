@@ -14,9 +14,17 @@ set exrc
     set numberwidth=4
     set laststatus=2
     set hlsearch
-    set nowrap
+    " set nowrap
     set listchars=eol:¬,tab:>·,trail:␣,extends:>,precedes:<
     set list
+    set noswapfile
+    set incsearch
+
+    set foldmethod=syntax
+    set foldnestmax=10
+    set foldlevel=2
+    set nofoldenable
+    set complete-=i
 " " }}}
 
 " Plugins " {{{
@@ -52,6 +60,12 @@ set exrc
     Plugin 'OmniCppComplete'
     Plugin 'marcweber/smarttag'
 
+    " Clipboard
+    Plugin 'kana/vim-fakeclip'
+
+    " Search
+    Plugin 'jremmen/vim-ripgrep'
+
     call vundle#end()
 " " }}}
 
@@ -77,6 +91,11 @@ syntax on
     map <F12> :make<CR>
     map! <F12> <ESC>:make<CR>i
 
+    ca tn tabnew
+    ca th tabp
+    ca tl tabn
+    ca tm tabm
+
     set pastetoggle=<F9>
 " " }}}
 
@@ -97,3 +116,12 @@ syntax on
     map <F5> :cprevious<CR>
     map <F6> :cnext<CR>
 " " }}}
+
+
+" Go to last active tab
+
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+
+
