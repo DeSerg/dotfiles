@@ -25,23 +25,23 @@ link () {
 	fi
 }
 
-install_tools () {
-	if [ $( echo "$OSTYPE" | grep 'darwin' ) ] ; then
-		echo "This utility will install useful utilities using Homebrew"
+install_linux_tools () {
+	if [ $( echo "$OSTYPE" | grep 'linux' ) ] ; then
+		echo "This utility will install useful utilities using apt"
 		echo "Proceed? (y/n)"
 		read resp
 		# TODO - regex here?
 		if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-			echo "Installing useful stuff using brew. This may take a while..."
-			sh brew.exclude.sh
+			echo "Installing useful stuff using apt. This may take a while..."
+			sh apt.exclude.sh
 		else
-			echo "Brew installation cancelled by user"
+			echo "Apt installation cancelled by user"
 		fi
 	else
-		echo "Skipping installations using Homebrew because MacOS was not detected..."
+		echo "Skipping installations using apt because linux was not detected..."
 	fi
 }
 
 init
 link
-install_tools
+install_linux_tools
