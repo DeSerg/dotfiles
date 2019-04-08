@@ -1,0 +1,29 @@
+[user]
+    name = sergei.popov
+    email = sergei.popov@corp.mail.ru
+
+
+[alias]
+    gr = log --graph --full-history --date=local --color --date-order --pretty=tformat:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m%x20%x1b[31m(%aD)\" --first-parent
+    grf = log --full-history --date=local --color --date-order --pretty=tformat:\"%x1b[31m%h%x20%x1b[33m(%cd)%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m%x0A%x0A%b\" --first-parent
+    gra = log --graph --full-history --date=local --color --date-order --pretty=tformat:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m%x20%x1b[31m(%aD)\"
+    co = checkout
+    st = status
+    corge = merge -s recursive -Xsubtree=core --no-ff
+
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[color "status"]
+    added = green
+    changed = red bold
+    untracked = magenta bold
+
+[color "branch"]
+    remote = yellow
