@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# Initialize a few things
 init () {
-	echo "Making a Projects folder in $PATH_TO_PROJECTS if it doesn't already exist"
-	mkdir -p "$PATH_TO_PROJECTS"
-	echo "Making a Playground folder in $PATH_TO_PLAYGROUND if it doesn't already exist"
-	mkdir -p "$PATH_TO_PLAYGROUND"
+    # Initialize a few things
+    echo 'Initing...'
 }
 
 link () {
@@ -25,7 +22,7 @@ link () {
 	fi
 }
 
-install_linux_tools () {
+install_tools () {
 	if [ $( echo "$OSTYPE" | grep 'linux' ) ] ; then
 		echo "This utility will install useful utilities using apt"
 		echo "Proceed? (y/n)"
@@ -37,11 +34,21 @@ install_linux_tools () {
 		else
 			echo "Apt installation cancelled by user"
 		fi
-	else
-		echo "Skipping installations using apt because linux was not detected..."
+    elif [ $( echo "$OSTYPE" | grep 'darwin' ) ] ; then
+        echo "This utility will install useful utilities using Homebrew"
+        echo "Proceed? (y/n)"
+        read resp
+        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+            echo "Installing useful stuff using brew. This may take a while..."
+            sh brew.exclude.sh
+        else
+            echo "Brew installation cancelled by user"
+        fi
+    else
+        echo "Skipping installations because neither Homebrew nor Linux were detected..."
 	fi
 }
 
 init
 link
-install_linux_tools
+install_tools
