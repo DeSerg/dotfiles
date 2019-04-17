@@ -1,6 +1,10 @@
 #!/bin/sh
 
+
 init () {
+    source "./.bashrc"
+
+    mkdir -p "$XDG_DATA_HOME"
     # Initialize a few things
     echo 'Initing...'
 }

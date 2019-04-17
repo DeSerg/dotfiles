@@ -15,47 +15,8 @@ apt install coreutils
 # Programming Languages and Frameworks
 # ---------------------------------------------
 
-# NodeJS
-apt install node
-
 # Python 3
 apt install python
-
-# Golang
-apt install go
-
-
-# ---------------------------------------------
-# Tools I use often
-# ---------------------------------------------
-
-# Heroku
-apt install heroku
-
-# Yarn - an alternative to npm
-apt install yarn
-
-# Docker for containerization
-apt install docker
-
-
-# ---------------------------------------------
-# Database Systems I use Often
-# ---------------------------------------------
-
-# MongoDB :D
-apt install mongo
-
-# RedisDB
-apt install redis
-
-
-# ---------------------------------------------
-# Useful tools
-# ---------------------------------------------
-
-# Make requests with awesome response formatting
-apt install httpie
 
 # Show directory structure with excellent formatting
 apt install tree
@@ -65,6 +26,10 @@ apt install tmux
 
 # gdb
 apt install gdb
+
+apt install subversion
+svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python $XDG_DATA_HOME/gdb_python
+
 
 # setup vim
 apt install vim
