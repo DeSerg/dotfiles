@@ -90,6 +90,7 @@ syntax on
     map <C-K> :Tags<CR>
     map <F12> :make<CR>
     map! <F12> <ESC>:make<CR>i
+    noremap <F5> :set paste! paste?<CR>
 
     ca tn tabnew
     ca th tabp
