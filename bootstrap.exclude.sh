@@ -27,7 +27,8 @@ link () {
 }
 
 install_tools () {
-	if [ $( echo "$OSTYPE" | grep 'linux' ) ] ; then
+    osType="$(uname -s)"
+	if [ "$osType" = "Linux" ] ; then
 		echo "This utility will install useful utilities using apt"
 		echo "Proceed? (y/n)"
 		read resp
@@ -38,7 +39,7 @@ install_tools () {
 		else
 			echo "Apt installation cancelled by user"
 		fi
-    elif [ $( echo "$OSTYPE" | grep 'darwin' ) ] ; then
+    elif [ "$osType" = "Darwin" ] ; then
         echo "This utility will install useful utilities using Homebrew"
         echo "Proceed? (y/n)"
         read resp
