@@ -4,6 +4,10 @@
 gbash='~/.bashrc_common'
 [ -f "$gbash" ] && source "$gbash"
 
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
