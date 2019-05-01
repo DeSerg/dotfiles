@@ -5,6 +5,8 @@ set expandtab
 set softtabstop=4
 set shiftwidth=4
 set shiftround
+set cursorline
+set paste
 
 set ignorecase
 set exrc
@@ -75,7 +77,7 @@ syntax on
 
 " Detect Imagine " {{{
     function! BuildImagine()
-        let g:App = fnamemodify(system('find . -name app.asm'), ':h:t')
+        let g:App = fnamemodify(system('find --maxdepth 3 . -name app.asm'), ':h:t')
         if g:App != '.'
             execute "set makeprg=./asm\\ -M\\ ".g:App
             " "."\\ NEED_ASANITIZER=1"
@@ -90,11 +92,12 @@ syntax on
     map <C-K> :Tags<CR>
     map <F12> :make<CR>
     map! <F12> <ESC>:make<CR>i
+    noremap <F5> :set paste! paste?<CR>
 
-    ca tn tabnew
-    ca th tabp
-    ca tl tabn
-    ca tm tabm
+    cnoreabbrev tn tabnew
+    cnoreabbrev th tabp
+    cnoreabbrev tl tabn
+    cnoreabbrev tm tabm
 
     set pastetoggle=<F9>
 " " }}}
@@ -110,9 +113,12 @@ syntax on
     filetype plugin on
     map <F10> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
     nmap <F3> :call SmartTag#SmartTag("goto")<CR>
+    nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+    nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
     "nmap <C-_><C-W> :call SmartTag#SmartTag("split")<CR>
     "nmap <C-_><C-T> :call SmartTag#SmartTag("tab")<CR>
     "nmap <C-_><C-D> :call SmartTag#SmartTag("debug")<CR>
+    noremap <F4> :noh<CR>
     map <F5> :cprevious<CR>
     map <F6> :cnext<CR>
 " " }}}
