@@ -6,6 +6,8 @@ export XDG_DATA_HOME
 # User specific aliases and functions
 alias tags_upd='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q'
 
+alias tmux-update-ssh-sock='export $(tmux showenv SSH_AUTH_SOCK)'
+
 # Do not stuck on Ctrl+S in vim
 stty -ixon
 
