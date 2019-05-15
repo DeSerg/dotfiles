@@ -10,6 +10,19 @@ apt upgrade
 # Core Utils
 apt install coreutils
 
+# Rust
+curl https://sh.rustup.rs -sSf | sh
+source $HOME/.cargo/env
+
+# ripgrep
+git clone https://github.com/BurntSushi/ripgrep
+pushd ripgrep
+cargo build --release
+./target/release/rg --version
+mkdir -p $HOME/bin/
+cp ./target/release/rg $HOME/bin/
+popd
+sudo rm -r ripgrep
 
 # ---------------------------------------------
 # Programming Languages and Frameworks
