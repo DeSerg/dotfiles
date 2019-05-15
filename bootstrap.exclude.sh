@@ -1,5 +1,16 @@
 #!/bin/sh
 
+declare -A osInfo;
+osInfo[/etc/redhat-release]=yum
+osInfo[/etc/arch-release]=pacman
+osInfo[/etc/gentoo-release]=emerge
+osInfo[/etc/SuSE-release]=zypp
+osInfo[/etc/debian_version]=apt-get
+
+declare -A pmScripts;
+pmScripts[yum]=yum.exclude.sh
+pmScripts[apt]=apt.exclude.sh
+
 
 init () {
     source "./.bashrc"
@@ -26,18 +37,41 @@ link () {
     fi
 }
 
+pm_exists () {
+    # If the given key maps to a non-empty string (-n), the
+    # key obviously exists. Otherwise, we need to check if
+    # the special expansion produces an empty string or an
+    # arbitrary non-empty string.
+    [[ -n ${pmScripts[$1]} || -z ${psScripts[$1]-foo} ]]
+}
+
 install_tools () {
     osType="$(uname -s)"
     if [ "$osType" = "Linux" ] ; then
-        echo "This utility will install useful utilities using apt"
+
+        for f in ${!osInfo[@]}
+        do
+            if [[ -f $f ]];then
+                PM="${osInfo[$f]}"
+            fi
+        done
+
+        if ! pm_exists $PM; then
+            echo "Unable to install utilities due to unsupported package manager"
+            return
+        fi
+
+        pm_script="$pmScripts[$PM]}"
+
+        echo "This utility will install useful utilities using $PM"
         echo "Proceed? (y/n)"
         read resp
         # TODO - regex here?
         if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using apt. This may take a while..."
-            sh apt.exclude.sh
+            echo "Installing useful stuff using $PM. This may take a while..."
+            sh "$pm_script"
         else
-            echo "Apt installation cancelled by user"
+            echo "Installation cancelled by user"
         fi
     elif [ "$osType" = "Darwin" ] ; then
         echo "This utility will install useful utilities using Homebrew"

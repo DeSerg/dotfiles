@@ -27,3 +27,5 @@
 
 [color "branch"]
     remote = yellow
+[core]
+	excludesfile = ~/.gitignore
