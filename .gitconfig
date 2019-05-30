@@ -28,4 +28,8 @@
 [color "branch"]
     remote = yellow
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
+
+[push]
+    default = simple
+
