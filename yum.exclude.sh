@@ -29,6 +29,7 @@ yum install vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
+yum install ctags
 
 # Remove outdated versions from the cellar
 yum cleanup
