@@ -5,7 +5,11 @@ osInfo[/etc/redhat-release]=yum
 osInfo[/etc/arch-release]=pacman
 osInfo[/etc/gentoo-release]=emerge
 osInfo[/etc/SuSE-release]=zypp
+<<<<<<< HEAD
 osInfo[/etc/debian_version]='sudo apt'
+=======
+osInfo[/etc/debian_version]=apt
+>>>>>>> d6d936b... single flexible setup script
 
 ask () {
     echo "$1 (y/n)"
@@ -65,7 +69,11 @@ perform_installation() {
         pushd ripgrep
         cargo build --release
         ./target/release/rg --version
+<<<<<<< HEAD
         cp ./target/release/rg $XDG_BIN_HOME/
+=======
+        cp ./target/release/rg $XDG_BIN_HOME/bin/
+>>>>>>> d6d936b... single flexible setup script
         popd
         sudo rm -r ripgrep
 
