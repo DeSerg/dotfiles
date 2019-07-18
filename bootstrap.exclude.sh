@@ -46,45 +46,14 @@ pm_exists () {
 }
 
 install_tools () {
-    osType="$(uname -s)"
-    if [ "$osType" = "Linux" ] ; then
-
-        for f in ${!osInfo[@]}
-        do
-            if [[ -f $f ]];then
-                PM="${osInfo[$f]}"
-            fi
-        done
-
-        if ! pm_exists $PM; then
-            echo "Unable to install utilities due to unsupported package manager"
-            return
-        fi
-
-        pm_script="$pmScripts[$PM]}"
-
-        echo "This utility will install useful utilities using $PM"
-        echo "Proceed? (y/n)"
-        read resp
-        # TODO - regex here?
-        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using $PM. This may take a while..."
-            sh "$pm_script"
-        else
-            echo "Installation cancelled by user"
-        fi
-    elif [ "$osType" = "Darwin" ] ; then
-        echo "This utility will install useful utilities using Homebrew"
-        echo "Proceed? (y/n)"
-        read resp
-        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using brew. This may take a while..."
-            sh brew.exclude.sh
-        else
-            echo "Brew installation cancelled by user"
-        fi
+    echo "This utility will install useful utilities"
+    echo "Proceed? (y/n)"
+    read resp
+    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+        echo "Installing useful stuff using $PM. This may take a while..."
+        sh apt.exclude.sh
     else
-        echo "Skipping installations because neither Homebrew nor Linux were detected..."
+        echo "Installation cancelled by user"
     fi
 }
 

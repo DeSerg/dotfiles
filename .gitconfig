@@ -1,6 +1,6 @@
 [user]
-    name = sergei.popov
-    email = sergei.popov@corp.mail.ru
+	name = deserg
+	email = deserg@google.com
 
 [push]
     default = simple
@@ -37,3 +37,5 @@
 [push]
     default = simple
 
+[http]
+	cookiefile = /media/samsung_ssd/home/deserg/.gitcookies

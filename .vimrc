@@ -96,7 +96,7 @@ syntax on
     map <F5> :cprevious<CR>
     map <F6> :cnext<CR>
     set pastetoggle=<F7>
-    map <F9> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+    map <F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
     map <F12> :make<CR>
     map! <F12> <ESC>:make<CR>i
 
