@@ -5,7 +5,7 @@ osInfo[/etc/redhat-release]=yum
 osInfo[/etc/arch-release]=pacman
 osInfo[/etc/gentoo-release]=emerge
 osInfo[/etc/SuSE-release]=zypp
-osInfo[/etc/debian_version]=apt
+osInfo[/etc/debian_version]='sudo apt'
 
 ask () {
     echo "$1 (y/n)"
@@ -65,7 +65,7 @@ perform_installation() {
         pushd ripgrep
         cargo build --release
         ./target/release/rg --version
-        cp ./target/release/rg $XDG_BIN_HOME/bin/
+        cp ./target/release/rg $XDG_BIN_HOME/
         popd
         sudo rm -r ripgrep
 
