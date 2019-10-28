@@ -26,9 +26,19 @@ link () {
     read resp
     # TODO - regex here?
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md' ) ; do
+        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md|.ssh*' ) ; do
             ln -sv "$PWD/$file" "$HOME"
         done
+
+        # copy ssh config
+        mkdir -p "~/.ssh"
+
+        ssh_config_path='ssh_config_common'
+        if [[ -f $ssh_config_path ]];then
+            ln -sv "$PWD/$ssh_config_path" "~/.ssh/config_common"
+            PM="${osInfo[$f]}"
+        fi
+
         # TODO: source files here?
         echo "Symlinking complete"
     else
