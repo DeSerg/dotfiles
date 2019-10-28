@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 declare -A osInfo;
 osInfo[/etc/redhat-release]=yum
@@ -31,12 +31,11 @@ link () {
         done
 
         # copy ssh config
-        mkdir -p "~/.ssh"
+        mkdir -p "$HOME/.ssh"
 
         ssh_config_path='ssh_config_common'
         if [[ -f $ssh_config_path ]];then
-            ln -sv "$PWD/$ssh_config_path" "~/.ssh/config_common"
-            PM="${osInfo[$f]}"
+            ln -sv "$PWD/$ssh_config_path" "$HOME/.ssh/config_common"
         fi
 
         # TODO: source files here?
