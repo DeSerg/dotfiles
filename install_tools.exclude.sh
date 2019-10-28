@@ -5,7 +5,7 @@ osInfo[/etc/redhat-release]=yum
 osInfo[/etc/arch-release]=pacman
 osInfo[/etc/gentoo-release]=emerge
 osInfo[/etc/SuSE-release]=zypp
-osInfo[/etc/debian_version]='sudo apt'
+osInfo[/etc/debian_version]=apt
 
 ask () {
     echo "$1 (y/n)"
@@ -37,8 +37,12 @@ choose_pm() {
     elif [ "$osType" = "Darwin" ] ; then
         PM=brew
     fi
-}
 
+    echo "PM: $PM"
+    if ask "Install using sudo?"; then
+        PM="sudo $PM"
+    fi
+}
 
 perform_installation() {
     # Install command-line tools using $PM.
@@ -46,37 +50,18 @@ perform_installation() {
     $PM update
 
     # Upgrade any already-installed formulae
-    $PM upgrade
+    # $PM upgrade
 
     # Core Utils
     $PM install coreutils
 
     # Rust
     if ask "Install Rust?"; then
+        if [ "$PM" = "yum" ] ; then
+            sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+        fi
 
-        curl https://sh.rustup.rs -sSf >> rust.sh
-        chmod +x rust.sh
-        ./rust.sh -y
-        rm rust.sh
-        source $HOME/.cargo/env
-
-        # ripgrep
-        git clone https://github.com/BurntSushi/ripgrep
-        pushd ripgrep
-        cargo build --release
-        ./target/release/rg --version
-<<<<<<< HEAD
-<<<<<<< HEAD
-        cp ./target/release/rg $XDG_BIN_HOME/
-=======
-        cp ./target/release/rg $XDG_BIN_HOME/bin/
->>>>>>> d6d936b... single flexible setup script
-=======
-        cp ./target/release/rg $XDG_BIN_HOME/
->>>>>>> 480ba01... pkgs install update
-        popd
-        sudo rm -r ripgrep
-
+        $PM install ripgrep
     fi
 
     # ---------------------------------------------
@@ -84,7 +69,7 @@ perform_installation() {
     # ---------------------------------------------
 
     # Python 3
-    $PM install python
+    $PM install python3
 
     # Show directory structure with excellent formatting
     $PM install tree
@@ -101,7 +86,8 @@ perform_installation() {
 
     # setup vim
     $PM install vim
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    mkdir -p "$HOME/.vim/bundle"
+    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
 
     $PM install ctags

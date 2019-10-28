@@ -60,7 +60,7 @@ install_tools () {
     read resp
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
         echo "Installing useful stuff using $PM. This may take a while..."
-        sh apt.exclude.sh
+        sh install_tools.sh
     else
         echo "Installation cancelled by user"
     fi
