@@ -1,4 +1,15 @@
-#!/bin/sh
+#!/bin/bash
+
+declare -A osInfo;
+osInfo[/etc/redhat-release]=yum
+osInfo[/etc/arch-release]=pacman
+osInfo[/etc/gentoo-release]=emerge
+osInfo[/etc/SuSE-release]=zypp
+osInfo[/etc/debian_version]=apt-get
+
+declare -A pmScripts;
+pmScripts[yum]=yum.exclude.sh
+pmScripts[apt]=apt.exclude.sh
 
 
 init () {
@@ -15,9 +26,18 @@ link () {
     read resp
     # TODO - regex here?
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md' ) ; do
+        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md|.ssh*' ) ; do
             ln -sv "$PWD/$file" "$HOME"
         done
+
+        # copy ssh config
+        mkdir -p "$HOME/.ssh"
+
+        ssh_config_path='ssh_config_common'
+        if [[ -f $ssh_config_path ]];then
+            ln -sv "$PWD/$ssh_config_path" "$HOME/.ssh/config_common"
+        fi
+
         # TODO: source files here?
         echo "Symlinking complete"
     else
@@ -26,31 +46,23 @@ link () {
     fi
 }
 
+pm_exists () {
+    # If the given key maps to a non-empty string (-n), the
+    # key obviously exists. Otherwise, we need to check if
+    # the special expansion produces an empty string or an
+    # arbitrary non-empty string.
+    [[ -n ${pmScripts[$1]} || -z ${psScripts[$1]-foo} ]]
+}
+
 install_tools () {
-    osType="$(uname -s)"
-    if [ "$osType" = "Linux" ] ; then
-        echo "This utility will install useful utilities using apt"
-        echo "Proceed? (y/n)"
-        read resp
-        # TODO - regex here?
-        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using apt. This may take a while..."
-            sh apt.exclude.sh
-        else
-            echo "Apt installation cancelled by user"
-        fi
-    elif [ "$osType" = "Darwin" ] ; then
-        echo "This utility will install useful utilities using Homebrew"
-        echo "Proceed? (y/n)"
-        read resp
-        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-            echo "Installing useful stuff using brew. This may take a while..."
-            sh brew.exclude.sh
-        else
-            echo "Brew installation cancelled by user"
-        fi
+    echo "This utility will install useful utilities"
+    echo "Proceed? (y/n)"
+    read resp
+    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+        echo "Installing useful stuff using $PM. This may take a while..."
+        sh apt.exclude.sh
     else
-        echo "Skipping installations because neither Homebrew nor Linux were detected..."
+        echo "Installation cancelled by user"
     fi
 }
 

@@ -6,7 +6,6 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 set cursorline
-set paste
 
 set ignorecase
 set exrc
@@ -89,45 +88,55 @@ syntax on
 " Keyboard " {{{
     map <F2> :NERDTreeToggle<CR>
     map <C-P> :Files<CR>
-    map <C-K> :Tags<CR>
+    " map <C-M> :Tags<CR>
+
+    " Map function keys
+    nmap <F3> :call SmartTag#SmartTag("goto")<CR>
+    noremap <F4> :noh<CR>
+    map <F5> :cprevious<CR>
+    map <F6> :cnext<CR>
+    set pastetoggle=<F7>
+    map <F8> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
     map <F12> :make<CR>
     map! <F12> <ESC>:make<CR>i
-    noremap <F5> :set paste! paste?<CR>
 
     cnoreabbrev tn tabnew
     cnoreabbrev th tabp
     cnoreabbrev tl tabn
     cnoreabbrev tm tabm
 
-    set pastetoggle=<F9>
 " " }}}
 
 " Airline Configuration " {{{
     "let g:airline#extensions#tabline#enabled = 1
-    let g:airline_powerline_fonts = 0
+    let g:airline_powerline_fonts = 1
     let g:airline_theme='base16_harmonic16'
 " " }}}
 
 " For completion " {{{
     set nocp
     filetype plugin on
-    map <F10> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-    nmap <F3> :call SmartTag#SmartTag("goto")<CR>
     nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
     nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
     "nmap <C-_><C-W> :call SmartTag#SmartTag("split")<CR>
     "nmap <C-_><C-T> :call SmartTag#SmartTag("tab")<CR>
     "nmap <C-_><C-D> :call SmartTag#SmartTag("debug")<CR>
-    noremap <F4> :noh<CR>
-    map <F5> :cprevious<CR>
-    map <F6> :cnext<CR>
 " " }}}
 
 
 " Go to last active tab
 
-au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
+au tabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <C-,> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <C-,> :exe "tabn ".g:lasttab<cr>
 
+
+"" Splits
+set splitbelow
+set splitright
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
