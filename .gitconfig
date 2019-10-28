@@ -38,5 +38,3 @@
 [push]
     default = simple
 
-[http]
-	cookiefile = /media/samsung_ssd/home/deserg/.gitcookies
