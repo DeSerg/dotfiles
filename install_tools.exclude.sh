@@ -38,6 +38,7 @@ choose_pm() {
         PM=brew
     fi
 
+    PM_ORIGIN=$PM
     echo "PM: $PM"
     if ask "Install using sudo?"; then
         PM="sudo $PM"
@@ -47,17 +48,25 @@ choose_pm() {
 perform_installation() {
     # Install command-line tools using $PM.
     # Make sure we’re using the latest $PM
+    echo "Update packages info"
     $PM update
 
     # Upgrade any already-installed formulae
     # $PM upgrade
 
-    # Core Utils
+    echo "Install core utils"
     $PM install coreutils
+    if [ "$PM_ORIGIN" = "yum" ] ; then
+        $PM groupinstall "Development Tools"
+        $PM install kernel-devel kernel-headers
+    elif [ "$PM_ORIGIN" = "apt" ] ; then
+        $PM install buildessntials
+    fi
 
     # Rust
     if ask "Install Rust?"; then
-        if [ "$PM" = "yum" ] ; then
+        echo "Install Rust"
+        if [ "$PM_ORIGIN" = "yum" ] ; then
             sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
         fi
 
@@ -69,15 +78,19 @@ perform_installation() {
     # ---------------------------------------------
 
     # Python 3
+    echo "Install python"
     $PM install python3
 
     # Show directory structure with excellent formatting
+    echo "Install tree"
     $PM install tree
 
     # tmux :'D
+    echo "Install tmux"
     $PM install tmux
 
     # gdb
+    echo "Install and setup gdb"
     $PM install gdb
 
     $PM install subversion
@@ -85,6 +98,7 @@ perform_installation() {
 
 
     # setup vim
+    echo "Install and setup vim"
     $PM install vim
     mkdir -p "$HOME/.vim/bundle"
     git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
@@ -93,6 +107,7 @@ perform_installation() {
     $PM install ctags
 
     # setup fonts
+    echo "Install powerline fonts"
     $PM install fonts-powerline
 
     # ---------------------------------------------
@@ -100,6 +115,7 @@ perform_installation() {
     # ---------------------------------------------
 
     # Remove outdated versions from the cellar
+    echo "Cleanup"
     $PM cleanup
 
 }
