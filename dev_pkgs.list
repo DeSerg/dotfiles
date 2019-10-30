@@ -1,0 +1,37 @@
+binutils
+boost-devel
+clearsilver-devel
+flex
+gcc
+gcc53
+gcc53-c++
+gcc90
+gcc90-c++
+gcc-c++
+GeoIP-devel
+glib2-devel
+gperftools
+gtest
+gtest-devel
+icq-boost161-devel
+jansson-devel
+libarchive-devel
+libcurl-devel
+libidn-devel
+libmaxminddb-devel
+libunwind-devel
+libuuid-devel
+libxml2-devel
+mariadb-devel
+mariadb-libs
+minizip
+openssl-devel
+pcre-devel
+perl-Digest-MD5
+tcl-devel
+uuid-devel-extra
+xerces-c-2
+zlib
+
+# sudo vim /etc/yum.repos.d/epel.repo: enabled=1
+# cat dev_pkgs.list | xargs sudo yum install -y
