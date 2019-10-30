@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 declare -A osInfo;
 osInfo[/etc/redhat-release]=yum
@@ -26,9 +26,18 @@ link () {
     read resp
     # TODO - regex here?
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md' ) ; do
+        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md|.ssh*' ) ; do
             ln -sv "$PWD/$file" "$HOME"
         done
+
+        # copy ssh config
+        mkdir -p "$HOME/.ssh"
+
+        ssh_config_path='ssh_config_common'
+        if [[ -f $ssh_config_path ]];then
+            ln -sv "$PWD/$ssh_config_path" "$HOME/.ssh/config_common"
+        fi
+
         # TODO: source files here?
         echo "Symlinking complete"
     else
@@ -51,7 +60,7 @@ install_tools () {
     read resp
     if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
         echo "Installing useful stuff using $PM. This may take a while..."
-        sh apt.exclude.sh
+        sh install_tools.sh
     else
         echo "Installation cancelled by user"
     fi
