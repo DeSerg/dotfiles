@@ -1,6 +1,6 @@
 [user]
-	name = deserg
-	email = deserg@google.com
+    name = sergei.popov
+    email = sergei.popov@corp.mail.ru
 
 [push]
     default = simple
@@ -33,9 +33,9 @@
 [color "branch"]
     remote = yellow
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = /home/centos/.gitignore_global
     editor = vim
 
 [push]
-    default = simple
+    default = current
 

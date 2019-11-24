@@ -10,6 +10,7 @@ mkdir -p $XDG_BIN_HOME
 [[ ":$PATH:" != *":$XDG_BIN_HOME:"* ]] && export PATH="${PATH}:$XDG_BIN_HOME"
 
 # User specific aliases and functions
+alias sudo='sudo '
 alias tags_upd='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q'
 
 alias tmux-update-ssh-sock='export $(tmux showenv SSH_AUTH_SOCK)'

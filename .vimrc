@@ -10,6 +10,10 @@ set cursorline
 set ignorecase
 set exrc
 
+" Language
+autocmd BufRead,BufNewFile *.ii set filetype=cpp
+autocmd BufRead,BufNewFile *.i set filetype=cpp
+
 " Visual " {{{
     set number
     set numberwidth=4
@@ -67,12 +71,20 @@ set exrc
     " Search
     Plugin 'jremmen/vim-ripgrep'
 
+    " Bookmarks
+    Plugin 'MattesGroeger/vim-bookmarks'
+
     call vundle#end()
 " " }}}
 
 filetype plugin indent on
 color elflord
 syntax on
+
+" Bookmarks
+autocmd ColorScheme * highlight clear SignColumn
+set signcolumn=no
+let g:bookmark_save_per_working_dir = 1
 
 " Detect Imagine " {{{
     function! BuildImagine()
@@ -86,9 +98,12 @@ syntax on
 " " }}}
 
 " Keyboard " {{{
+
     map <F2> :NERDTreeToggle<CR>
     map <C-P> :Files<CR>
-    " map <C-M> :Tags<CR>
+
+    execute "set <M-p>=\ep"
+    nnoremap <M-p> :Tags<CR>
 
     " Map function keys
     nmap <F3> :call SmartTag#SmartTag("goto")<CR>

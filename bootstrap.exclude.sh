@@ -11,6 +11,15 @@ declare -A pmScripts;
 pmScripts[yum]=yum.exclude.sh
 pmScripts[apt]=apt.exclude.sh
 
+ask () {
+    echo "$1 (y/n)"
+    read resp
+    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
 
 init () {
     source "./.bashrc"
@@ -20,30 +29,33 @@ init () {
     echo 'Initing...'
 }
 
-link () {
-    echo "This utility will symlink the files in this repo to the home directory"
-    echo "Proceed? (y/n)"
-    read resp
-    # TODO - regex here?
-    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+symlink_files () {
+    HOME_DIR=$1
+    SUDO_PREF=$2
+
+    if ask "Proceed with symlinking files in this repo to the home directory $HOME_DIR?"; then
         for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md|.ssh*' ) ; do
-            ln -sv "$PWD/$file" "$HOME"
+            $SUDO_PREF ln -sv "$PWD/$file" "$HOME_DIR"
         done
 
         # copy ssh config
-        mkdir -p "$HOME/.ssh"
+        if ask "Copy ssh config?"; then
+            $SUDO_PREF mkdir -p "$HOME_DIR/.ssh"
 
-        ssh_config_path='ssh_config_common'
-        if [[ -f $ssh_config_path ]];then
-            ln -sv "$PWD/$ssh_config_path" "$HOME/.ssh/config_common"
+            ssh_config_path='ssh_config_common'
+            if [[ -f $ssh_config_path ]];then
+                $SUDO_PREF ln -sv "$PWD/$ssh_config_path" "$HOME_DIR/.ssh/config_common"
+            fi
         fi
 
         # TODO: source files here?
         echo "Symlinking complete"
-    else
-        echo "Symlinking cancelled by user"
-        return 1
     fi
+}
+
+link () {
+    symlink_files $HOME ""
+    symlink_files "/root/" "sudo "
 }
 
 pm_exists () {
