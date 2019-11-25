@@ -23,3 +23,9 @@ transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfe
 [ -f "${HOME}/.bashrc.im" ] && source "${HOME}/.bashrc.im"
 [ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"
 
+ggrep() {
+    pattern="$1"
+    shift
+    git grep -i $pattern $@ $(git for-each-ref --format='%(refname)' refs/remotes | rg -v ".*\..*" | rg -v mimeparser) | rg -v core
+}
+
