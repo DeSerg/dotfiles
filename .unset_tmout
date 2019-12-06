@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [[ -v TMOUT ]];
+then
+    gdb -ex 'call unbind_variable("TMOUT")' --pid=$$ --batch
+fi
+
