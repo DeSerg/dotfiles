@@ -22,6 +22,7 @@ transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfe
 
 [ -f "${HOME}/.bashrc.im" ] && source "${HOME}/.bashrc.im"
 [ -f "${HOME}/.bashrc.local" ] && source "${HOME}/.bashrc.local"
+[ -f "${HOME}/.unset_tmout" ] && source "${HOME}/.unset_tmout"
 
 ggrep() {
     pattern="$1"

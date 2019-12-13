@@ -9,6 +9,7 @@ set cursorline
 
 set ignorecase
 set exrc
+set backspace=indent,eol,start
 
 " Language
 autocmd BufRead,BufNewFile *.ii set filetype=cpp
