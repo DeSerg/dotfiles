@@ -40,3 +40,5 @@
 [push]
     default = current
 
+[include]
+	path = /home/centos/im_dotfiles/gitconfig
