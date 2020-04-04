@@ -31,6 +31,9 @@ alias cfront='rlwrap nc 10.246.4.22 2410'
 alias cnick='rlwrap nc 127.0.0.1 4421'
 alias ccura='rlwrap nc 10.246.4.22 4541'
 alias cmchat='rlwrap nc 127.0.0.1 4081'
+alias cbubz='rlwrap nc 127.0.0.1 4041'
+alias cmchat='rlwrap nc 127.0.0.1 4081'
+alias cgbld-mchat='rlwrap nc 127.0.0.1 4721'
 
 PS1="\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] "
 

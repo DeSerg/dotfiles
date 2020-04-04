@@ -1,0 +1,23 @@
+#!/bin/bash
+
+url="127.0.0.1:1830/$(echo $1 | rg -o '\w(/\w+[^?]+.*)' -r '$1')"
+while :
+do
+    # Write your code below, you can interact with API's using curl
+    out=$(curl -s $url)
+    echo "$out"
+    echo ""
+
+    url_full=$(echo $out | jq -r '.response.data.fetchBaseURL')
+    # echo "url_full: $url_full"
+
+    url_path=$(echo $url_full | rg 'https://[^/]+/(.*)' -NIor '$1')
+    # echo "url_path: $url_path"
+
+    url="http://127.0.0.1:1830/$url_path"
+    #echo "Next url: $url"
+    #echo ""
+    echo ""
+
+    sleep 0.8 # You might need to adjust this, if the request takes more time to complete
+done
