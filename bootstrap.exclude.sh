@@ -34,7 +34,7 @@ symlink_files () {
     SUDO_PREF=$2
 
     if ask "Proceed with symlinking files in this repo to the home directory $HOME_DIR?"; then
-        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore|.*.md|.ssh*' ) ; do
+        for file in $( ls -A | grep -vE '\.exclude*|\.git$|\.gitignore$|.*.md|.ssh*' ) ; do
             $SUDO_PREF ln -sv "$PWD/$file" "$HOME_DIR"
         done
 

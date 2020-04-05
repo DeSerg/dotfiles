@@ -1,7 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-if [[ -v TMOUT ]];
+variable-is-set() {
+    declare -p "$1" &>/dev/null
+}
+
+if variable-is-set TMOUT
 then
+    echo "TMOUT set, unsetting"
     gdb -ex 'call unbind_variable("TMOUT")' --pid=$$ --batch
 fi
 
