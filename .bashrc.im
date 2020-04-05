@@ -14,13 +14,26 @@ alias ll='ls -lah --color=tty'
 
 alias grepr='grep -rIn'
 
-alias mmap='rlwrap nc mrimdev3.corp.mail.ru 2413'
-alias mcox='rlwrap nc mrimdev5.corp.mail.ru 2207'
-alias mprof='rlwrap nc mrimdev5.corp.mail.ru 5001'
-
-alias smap='rlwrap nc mrimctlr.sbx 4020'
-
 alias gdb='/opt/rh/devtoolset-8/root/usr/bin/gdb'
+
+alias ss='sudo systemctl'
+alias st='sudo tarantoolctl'
+
+alias cbubz='rlwrap nc 127.0.0.1 4041'
+alias cprof='rlwrap nc 127.0.0.1 4281'
+alias cgbld-st='rlwrap nc 127.0.0.1 4201'
+alias ccox='rlwrap nc 127.0.0.1 4221'
+alias creich='rlwrap nc 127.0.0.1 4241'
+alias cctlr='rlwrap nc 127.0.0.1 4020'
+alias cche='rlwrap nc 127.0.0.1 4521'
+alias cbeagle='rlwrap nc 10.246.4.22 4681'
+alias cfront='rlwrap nc 10.246.4.22 2410'
+alias cnick='rlwrap nc 127.0.0.1 4421'
+alias ccura='rlwrap nc 10.246.4.22 4541'
+alias cmchat='rlwrap nc 127.0.0.1 4081'
+alias cbubz='rlwrap nc 127.0.0.1 4041'
+alias cmchat='rlwrap nc 127.0.0.1 4081'
+alias cgbld-mchat='rlwrap nc 127.0.0.1 4721'
 
 PS1="\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] "
 

@@ -28,7 +28,7 @@ transfer(){ if [ $# -eq 0 ];then echo "No arguments specified.\nUsage:\n transfe
 ggrep() {
     pattern="$1"
     shift
-    git grep -i $pattern $@ $(git for-each-ref --format='%(refname)' refs/remotes | rg -v ".*\..*" | rg -v mimeparser) | rg -v core
+    git grep -i "$pattern" $@ $(git for-each-ref --format='%(refname)' refs/remotes | rg -v ".*\..*" | rg -v mimeparser) | rg -v core
 }
 
 export PATH="${HOME}/bin:${PATH}"
