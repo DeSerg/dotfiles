@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 declare -A osInfo;
-osInfo[/etc/redhat-release]=yum
-osInfo[/etc/arch-release]=pacman
-osInfo[/etc/gentoo-release]=emerge
-osInfo[/etc/SuSE-release]=zypp
-osInfo[/etc/debian_version]=apt
+osInfo['/etc/redhat-release']='yum'
+osInfo['/etc/arch-release']='pacman'
+osInfo['/etc/gentoo-release']='emerge'
+osInfo['/etc/SuSE-release']='zypp'
+osInfo['/etc/debian_version']='apt'
 
 ask () {
     echo "$1 (y/n)"
@@ -48,12 +48,14 @@ choose_pm() {
 perform_installation() {
     # Install command-line tools using $PM.
     # Make sure we’re using the latest $PM
+    echo ""
     echo "Update packages info"
     $PM update
 
     # Upgrade any already-installed formulae
     # $PM upgrade
 
+    echo ""
     echo "Install core utils"
     $PM install coreutils
     if [ "$PM_ORIGIN" = "yum" ] ; then
@@ -64,7 +66,8 @@ perform_installation() {
     fi
 
     # Rust
-    if ask "Install Rust?"; then
+    echo ""
+    if ask "Install Rust and ripgrep?"; then
         echo "Install Rust"
         if [ "$PM_ORIGIN" = "yum" ] ; then
             sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
@@ -78,18 +81,22 @@ perform_installation() {
     # ---------------------------------------------
 
     # Python 3
+    echo ""
     echo "Install python"
     $PM install python3
 
     # Show directory structure with excellent formatting
+    echo ""
     echo "Install tree"
     $PM install tree
 
     # tmux :'D
+    echo ""
     echo "Install tmux"
     $PM install tmux
 
     # gdb
+    echo ""
     echo "Install and setup gdb"
     $PM install gdb
 
@@ -98,6 +105,7 @@ perform_installation() {
 
 
     # setup vim
+    echo ""
     echo "Install and setup vim"
     $PM install vim
     mkdir -p "$HOME/.vim/bundle"
@@ -107,16 +115,9 @@ perform_installation() {
     $PM install ctags
 
     # setup fonts
+    echo ""
     echo "Install powerline fonts"
     $PM install fonts-powerline
-
-    # ---------------------------------------------
-    # Misc
-    # ---------------------------------------------
-
-    # Remove outdated versions from the cellar
-    echo "Cleanup"
-    $PM cleanup
 
 }
 
