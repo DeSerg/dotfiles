@@ -1,0 +1,9 @@
+#!/bin/bash
+
+clientLogin=$(curl -sX POST 'http://127.0.0.1:1810/wim/auth/clientLogin?tokenType=longTerm&clientName=webIMOnPremise&clientVersion=526&idType=ICQ&s=testuser6&k=on2eeJ1ahgh-icqweb' -d "pwd=1234")
+
+atoken=$(echo $clientLogin | jq -r '.response.data.token.a')
+
+curl -sX POST "https://sergeipopov.u.im-sandbox.devmail.ru/wim/aim/startSession?a=$atoken&assertCaps=094613584C7F11D18222444553540000%2C0946135C4C7F11D18222444553540000%2C0946135b4c7f11d18222444553540000%2C0946135E4C7F11D18222444553540000&c=jscb_tmp_c52597&clientName=SiteIM&deviceId=347c8c-1f8b-0411-3e32-dfce09e87329&events=myInfo%2Cpresence%2Cbuddylist%2Ctyping%2ChiddenChat%2Chist%2Cmchat%2CsentIM%2CimState%2CdataIM%2CofflineIM%2CuserAddedToBuddyList%2Cservice%2Clifestream%2Capps%2CpermitDeny%2Cdiff&f=json&includePresenceFields=aimId%2CdisplayId%2Cfriendly%2CfriendlyName%2Cstate%2CuserType%2CstatusMsg%2CstatusTime%2Clastseen%2Cssl%2CbuddyIcon%2Cmute%2CabContactName%2CabPhones%2Cofficial%2Cquiet%2CautoAddition%2ClargeIconId%2Ccapabilities&k=on2eeJ1ahgh-icqweb&language=ru-RU&sessionTimeout=2592000&ts=1586078677&view=online"
+
+

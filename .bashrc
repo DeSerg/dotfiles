@@ -14,6 +14,7 @@ alias sudo='sudo '
 alias tags_upd='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q'
 
 alias tmux-update-ssh-sock='export $(tmux showenv SSH_AUTH_SOCK)'
+alias ssh-fix='ssh-add ~/.ssh/id_rsa'
 
 # Do not stuck on Ctrl+S in vim
 stty -ixon

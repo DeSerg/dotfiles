@@ -1,0 +1,4 @@
+#!/bin/bash
+
+curl -X POST 'http://127.0.0.1:1810/wim/auth/clientLogin?tokenType=longTerm&clientName=webIMOnPremise&clientVersion=526&idType=ICQ&s=testuser6&k=on2eeJ1ahgh-icqweb' -d "pwd=1234"
+
