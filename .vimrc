@@ -82,11 +82,6 @@ filetype plugin indent on
 color elflord
 syntax on
 
-" Bookmarks
-autocmd ColorScheme * highlight clear SignColumn
-set signcolumn=no
-let g:bookmark_save_per_working_dir = 1
-
 " Detect Imagine " {{{
     function! BuildImagine()
         let g:App = fnamemodify(system('find --maxdepth 3 . -name app.asm'), ':h:t')

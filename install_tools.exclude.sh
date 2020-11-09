@@ -69,11 +69,9 @@ perform_installation() {
     echo ""
     if ask "Install Rust and ripgrep?"; then
         echo "Install Rust"
-        if [ "$PM_ORIGIN" = "yum" ] ; then
-            sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
-        fi
-
-        $PM install ripgrep
+        curl https://sh.rustup.rs -sSf | sh
+        source $HOME/.cargo/env
+        cargo install ripgrep
     fi
 
     # ---------------------------------------------
