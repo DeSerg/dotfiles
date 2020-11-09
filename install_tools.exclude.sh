@@ -1,23 +1,14 @@
 #!/usr/bin/env bash
 
-declare -A osInfo;
-osInfo['/etc/redhat-release']='yum'
-osInfo['/etc/arch-release']='pacman'
-osInfo['/etc/gentoo-release']='emerge'
-osInfo['/etc/SuSE-release']='zypp'
-osInfo['/etc/debian_version']='apt'
+smart_choose_pm() {
 
-ask () {
-    echo "$1 (y/n)"
-    read resp
-    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
-        return 0
-    else
-        return 1
-    fi
-}
+    declare -A osInfo;
+    osInfo['/etc/redhat-release']='yum'
+    osInfo['/etc/arch-release']='pacman'
+    osInfo['/etc/gentoo-release']='emerge'
+    osInfo['/etc/SuSE-release']='zypp'
+    osInfo['/etc/debian_version']='apt'
 
-choose_pm() {
     osType="$(uname -s)"
     if [ "$osType" = "Linux" ] ; then
 
@@ -38,12 +29,37 @@ choose_pm() {
         PM=brew
     fi
 
-    PM_ORIGIN=$PM
+}
+
+choose_pm() {
+
+    if ask "Choose PM?"; then
+        smart_choose_pm
+    else
+        PM=apt
+    fi
+
     echo "PM: $PM"
+
+    PM_ORIGIN=$PM
+
     if ask "Install using sudo?"; then
         PM="sudo $PM"
     fi
+
 }
+
+ask () {
+    echo "$1 (y/n)"
+    read resp
+    if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 
 perform_installation() {
     # Install command-line tools using $PM.
@@ -62,7 +78,7 @@ perform_installation() {
         $PM groupinstall "Development Tools"
         $PM install kernel-devel kernel-headers
     elif [ "$PM_ORIGIN" = "apt" ] ; then
-        $PM install buildessntials
+        $PM install build-essential
     fi
 
     # Rust
@@ -119,7 +135,7 @@ perform_installation() {
 
 }
 
-
 choose_pm
+
 perform_installation
 
